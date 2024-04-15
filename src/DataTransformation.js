@@ -11,7 +11,7 @@ function isObject(value) {
  * Function to add values as values if possible
  * @param {any} first First value to add
  * @param {any} second Second value to add
- * @return {string|boolean|null|number|bigint|object} Result of addition
+ * @return {string|boolean|number|bigint|object} Result of addition
  * @throws {Error} If addition is not possible
  */
 export function addValues(first, second) {
