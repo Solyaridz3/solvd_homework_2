@@ -76,7 +76,7 @@ export function convertToNumber(value) {
 }
 
 /**
- * Converts a given value to a number.
+ * Coerce given value to given type if it is possible.
  * @param {any} value - The value to coerce to type
  * @param {string} type - The string name of the type to be coerced into
  * @return {any} - The value with given type
@@ -86,13 +86,11 @@ export function coerceToType(value, type) {
     if (typeof value === type) {
         return value;
     } else if (type === "string") {
-        return value + "";
-    } else if (type === "number" && !isNaN(value * 1)) {
-        return value * 1;
+        return stringifyValue(value);
+    } else if (type === "number") {
+        return convertToNumber(value);
     } else if (type === "boolean") {
-        return !!value;
+        return invertBoolean(invertBoolean(value));
     }
     throw new Error("Unable to use type coercion for this value or type");
 }
-
-
