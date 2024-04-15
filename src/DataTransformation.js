@@ -1,18 +1,38 @@
 /**
- * Function to add values as numbers if possible
+ * Function to check whether value is object
+ * @param {any} value - Value to check
+ * @return {boolean} - True if it is object, false otherwise
+ */
+function isObject(value) {
+    return typeof value === "object" && !Array.isArray(value) && value !== null;
+}
+
+/**
+ * Function to add values as values if possible
  * @param {any} first First value to add
  * @param {any} second Second value to add
- * @return {number} Result of addition
+ * @return {string|boolean|null|number|bigint|object} Result of addition
  * @throws {Error} If addition is not possible
  */
 export function addValues(first, second) {
-    try {
-        return convertToNumber(first) + convertToNumber(second);
-    } catch (err) {
-        throw new Error(
-            `This addition is not possible. Reason: ${err.message}`,
-        );
+    const notAllowed = [null, undefined];
+    if (!notAllowed.includes(first) && !notAllowed.includes(second)) {
+        if (Array.isArray(first) && Array.isArray(second)) {
+            return [...first, ...second];
+        } else if (isObject(first) && isObject(second)) {
+            return { ...first, ...second };
+        } else if (typeof first === "string" && typeof second === "string") {
+            return first + second;
+        } else if (typeof first === "number" && typeof second === "number") {
+            return first + second;
+        } else if (typeof first === "bigint" && typeof second === "bigint") {
+            return first + second;
+        } else if (typeof first === "boolean" && typeof second === "boolean") {
+            // According to the Boolean Addition Law, if at least one of the operands is true, the result is true. Otherwise, the result is false.
+            return Boolean(first + second);
+        }
     }
+    throw new Error("This addition is not allowed.");
 }
 
 /**
@@ -74,3 +94,5 @@ export function coerceToType(value, type) {
     }
     throw new Error("Unable to use type coercion for this value or type");
 }
+
+
