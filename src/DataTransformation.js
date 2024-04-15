@@ -89,8 +89,6 @@ export function coerceToType(value, type) {
         return stringifyValue(value);
     } else if (type === "number") {
         return convertToNumber(value);
-    } else if (type === "boolean") {
-        return invertBoolean(invertBoolean(value));
     }
     throw new Error("Unable to use type coercion for this value or type");
 }
